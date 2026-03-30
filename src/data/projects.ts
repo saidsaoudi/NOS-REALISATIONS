@@ -43,7 +43,7 @@ export const projects = {
     icon: LayoutDashboard,
     items: [
       { name: "Geo Sales", action: "Découvrir le projet", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800", url: "https://geo-sales.vercel.app/", details: "Application de gestion commerciale et cartographie." },
-      { name: "Onessta Livraison", action: "Découvrir le projet", image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=800", url: "https://onessta.com/login", details: "Système complexe de gestion logistique et livraison." },
+      { name: "Onessta Livraison", action: "Découvrir le projet", image: "https://images.unsplash.com/photo-1549194388-2469d59ec75c?auto=format&fit=crop&q=80&w=800", url: "https://onessta.com/login", details: "Système complexe de gestion logistique et livraison." },
     ]
   }
 };
