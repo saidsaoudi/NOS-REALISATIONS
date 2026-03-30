@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, X, Sparkles, Bot, User } from 'lucide-react';
+import { Send, X, Sparkles, Bot, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { projects } from '../data/projects';
 
@@ -37,25 +37,19 @@ const AIChatbot: React.FC = () => {
     const currentInput = input.toLowerCase();
     setInput('');
 
-    // AI Mock Logic
     setTimeout(() => {
       let botResponse = "Je n'ai pas bien compris votre demande. Pourriez-vous préciser si vous cherchez un projet spécifique ou un domaine particulier (Hôtel, E-commerce, Vitrine, Solutions) ?";
-      
       const allItems = Object.values(projects).flatMap(cat => cat.items);
       const foundProject = allItems.find(p => currentInput.includes(p.name.toLowerCase()));
       
       if (foundProject) {
         botResponse = `Le projet **${foundProject.name}** est une de nos réalisations majeures. ${foundProject.details} Vous pouvez le consulter ici : ${foundProject.url}`;
       } else if (currentInput.includes('hotel') || currentInput.includes('tourisme')) {
-        botResponse = "Nous avons une grande expertise dans l'hôtellerie. Nos projets incluent Park Suites Hotel, Bab Errih, Sahara Hotel Agadir, et bien d'autres. Quel projet vous intéresse ?";
+        botResponse = "Nous avons une grande expertise dans l'hôtellerie. Nos projets incluent Park Suites Hotel, Bab Errih, Sahara Hotel Agadir. Quel projet vous intéresse ?";
       } else if (currentInput.includes('e-commerce') || currentInput.includes('boutique') || currentInput.includes('shop')) {
-        botResponse = "Pour le E-commerce, nous avons développé des plateformes robustes comme 55 Pens et Merinos Shop, optimisées pour la conversion.";
+        botResponse = "Pour le E-commerce, nous avons développé 55 Pens et Merinos Shop, optimisés pour la conversion.";
       } else if (currentInput.includes('solution') || currentInput.includes('app') || currentInput.includes('gestion')) {
-        botResponse = "Nos solutions sur-mesure comme Geo Sales ou Onessta Livraison permettent aux entreprises d'automatiser leurs processus métiers complexes.";
-      } else if (currentInput.includes('vitrine') || currentInput.includes('corporate')) {
-        botResponse = "Nos sites vitrines (Solar Power, Polytel, Mind Bridge) sont conçus pour offrir une image de marque forte et professionnelle.";
-      } else if (currentInput.includes('prix') || currentInput.includes('devis') || currentInput.includes('combien')) {
-        botResponse = "Chaque projet est unique. Je vous invite à nous contacter via la section contact pour obtenir un devis personnalisé selon vos besoins.";
+        botResponse = "Nos solutions sur-mesure comme Geo Sales ou Onessta Livraison permettent d'automatiser les processus métiers.";
       }
 
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), type: 'bot', text: botResponse }]);
@@ -70,41 +64,37 @@ const AIChatbot: React.FC = () => {
             initial={{ opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
-            className="absolute bottom-20 left-0 w-[400px] max-w-[90vw] h-[600px] max-h-[80vh] flex flex-col glass-card bg-black/80 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(139,92,246,0.2)] border-purple-500/20"
+            className="absolute bottom-24 left-0 w-[400px] max-w-[90vw] h-[600px] max-h-[75vh] flex flex-col bg-white border-8 border-black rounded-3xl overflow-hidden shadow-[15px_15px_0_#facc15] z-50"
           >
             {/* Header */}
-            <div className="p-6 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-purple-600/10 to-blue-600/10">
+            <div className="p-6 border-b-4 border-black flex items-center justify-between bg-yellow-400">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400">
+                <div className="p-2 rounded-xl bg-black text-yellow-400 border-2 border-black">
                   <Bot className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-display font-medium">Assistant IA Portfolio</h3>
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest">En ligne</span>
-                  </div>
+                  <h3 className="font-black text-black uppercase text-xl">IA ASSISTANT</h3>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-white/5 rounded-xl transition-colors"
-                aria-label="Fermer"
+                className="p-2 border-2 border-black rounded-lg bg-black text-white hover:bg-gray-800 transition-colors"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-white/10">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-white scrollbar-thin scrollbar-thumb-black">
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`flex gap-3 max-w-[85%] ${m.type === 'user' ? 'flex-row-reverse' : ''}`}>
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${m.type === 'user' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400'}`}>
-                      {m.type === 'user' ? <User className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+                  <div className={`flex gap-3 max-w-[90%] ${m.type === 'user' ? 'flex-row-reverse' : ''}`}>
+                    <div className={`w-10 h-10 rounded-full border-2 border-black flex items-center justify-center shrink-0 ${m.type === 'user' ? 'bg-black text-white' : 'bg-yellow-400 text-black'}`}>
+                      {m.type === 'user' ? <User className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
                     </div>
-                    <div className={`p-4 rounded-2xl text-sm leading-relaxed ${m.type === 'user' ? 'bg-blue-500/80 text-white rounded-tr-none' : 'bg-white/5 border border-white/10 text-gray-200 rounded-tl-none'}`}>
-                      {m.text}
+                    <div className={`p-4 font-bold border-4 border-black ${m.type === 'user' ? 'bg-black text-white rounded-2xl rounded-tr-none' : 'bg-white text-black rounded-2xl rounded-tl-none shadow-[4px_4px_0_#000]'}`}>
+                      <p className="text-sm leading-snug">{m.text}</p>
                     </div>
                   </div>
                 </div>
@@ -113,25 +103,24 @@ const AIChatbot: React.FC = () => {
             </div>
 
             {/* Input */}
-            <div className="p-6 border-t border-white/10 bg-white/5">
-              <div className="relative flex items-center">
+            <div className="p-6 border-t-4 border-black bg-yellow-400">
+              <div className="relative flex items-center gap-3">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Posez une question sur nos projets..."
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-5 pr-14 text-sm focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all"
+                  placeholder="Posez une question..."
+                  className="w-full bg-white border-4 border-black rounded-xl py-3 px-5 text-sm font-black focus:outline-none shadow-[4px_4px_0_#000] focus:translate-x-[2px] focus:translate-y-[2px] focus:shadow-none transition-all"
                 />
                 <button 
                   onClick={handleSend}
-                  className="absolute right-2 p-2.5 rounded-xl bg-purple-500 hover:bg-purple-600 text-white shadow-lg shadow-purple-500/20 transition-all active:scale-95"
-                  aria-label="Envoyer"
+                  className="p-3 border-4 border-black bg-black text-white rounded-xl shadow-[4px_4px_0_#fff] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                  aria-label="Send"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-5 h-5" />
                 </button>
               </div>
-              <p className="text-[10px] text-center text-gray-500 mt-4 tracking-tight">IA Portfolio v1.0 - Entraînée sur nos réalisations </p>
             </div>
           </motion.div>
         )}
@@ -140,15 +129,17 @@ const AIChatbot: React.FC = () => {
       {/* Floating Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ y: -5, x: -5, boxShadow: "10px 10px 0px #000" }}
         whileTap={{ scale: 0.95 }}
-        className={`p-5 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all ${isOpen ? 'bg-white/10 text-white rotate-90' : 'bg-purple-600 text-white border border-white/20'}`}
+        className={`w-20 h-20 rounded-full border-4 border-black flex items-center justify-center shadow-[6px_6px_0_#000] transition-all relative ${isOpen ? 'bg-black text-white rotate-90' : 'bg-yellow-400 text-black'}`}
       >
-        {isOpen ? <X className="w-8 h-8 text-white" /> : <Bot className="w-9 h-9 text-white group-hover:scale-110 transition-transform" />}
+        {isOpen ? <X className="w-10 h-10" /> : <Bot className="w-12 h-12" />}
         {!isOpen && (
-           <span className="absolute -top-1 -right-1 flex h-4 w-4">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-purple-500"></span>
+           <span className="absolute -top-1 -right-1 flex h-6 w-6">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-20"></span>
+            <span className="relative inline-flex rounded-full h-6 w-6 bg-black flex items-center justify-center border-2 border-yellow-400">
+               <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+            </span>
           </span>
         )}
       </motion.button>
